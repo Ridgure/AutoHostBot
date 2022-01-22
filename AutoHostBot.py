@@ -157,7 +157,6 @@ while True:
             exit()
         if response == "PING :tmi.twitch.tv\r\n":
             s.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
-            print "Reply: PONG :tmi.twitch.tv"
             try:
                 url = "https://api.twitch.tv/helix/streams?user_login=" + currentHost
                 params = {"Client-ID": "" + ClientID + "", "Authorization": "Bearer " + FollowerToken}
