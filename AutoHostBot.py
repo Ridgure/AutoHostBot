@@ -136,7 +136,6 @@ s.connect((Host, Port))
 s.send("PASS {}\r\n".format("oauth:" + SubscriberToken).encode("utf-8"))
 s.send("NICK {}\r\n".format(Nickname).encode("utf-8"))
 s.send("JOIN {}\r\n".format(Channel).encode("utf-8"))
-s.send("CAP REQ :twitch.tv/membership\r\n")
 s.send("CAP REQ :twitch.tv/commands\r\n")
 s.send("CAP REQ :twitch.tv/tags\r\n")
 
@@ -172,8 +171,6 @@ while True:
                     host()
                 currentGame = streamData['data'][0]['game_name']
                 currentTitle = streamData['data'][0]['title']
-                print "Currently hosting: " + currentHost + " who is streaming: " + currentGame + " with the title: " + \
-                      currentTitle
                 if currentGame == 'Minecraft':
                     minecraftStream = True
                 else:
@@ -221,7 +218,6 @@ while True:
         s.send("PASS {}\r\n".format("oauth:" + SubscriberToken).encode("utf-8"))
         s.send("NICK {}\r\n".format(Nickname.lower()).encode("utf-8"))
         s.send("JOIN {}\r\n".format(Channel).encode("utf-8"))
-        s.send("CAP REQ :twitch.tv/membership\r\n")
         s.send("CAP REQ :twitch.tv/commands\r\n")
         s.send("CAP REQ :twitch.tv/tags\r\n")
         pass
