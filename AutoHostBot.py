@@ -51,7 +51,7 @@ def host():
                 else:
                     host_channel(AutoHostList.hostList[i1])
                     print ("Tried to host the Minecraft stream: " + AutoHostList.hostList[i1])
-                    print ("The title of the stream is: " + streamData['data'][0]['title'])
+                    print ("The title of the stream is: " + streamData['data'][0]['title'].encode('utf', 'ignore'))
                     minecraftStream = True
                     currentHost = AutoHostList.hostList[i1]
                     break

@@ -4,3 +4,4 @@ venv/
 AutoHostConfig.py
 AutoHostList.py
 *.pyc
+AutoHostBotStart.bat
