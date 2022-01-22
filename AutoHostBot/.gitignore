@@ -1,0 +1,6 @@
+.idea
+.venv
+venv/
+AutoHostConfig.py
+AutoHostList.py
+*.pyc
