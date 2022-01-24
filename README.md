@@ -33,6 +33,7 @@
 | ------------- |
 |Filter stream titles with regular expressions|
 |Filter games so only games that you like are hosted|
+|Opens stream in [Livestreamer](https://docs.livestreamer.io/) if you install it|
 |Hosts a new stream as soon as the current stream switches to a game you don't like|
 
 | Socials:      |Links to socials:|                  
