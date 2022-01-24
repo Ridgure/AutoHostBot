@@ -8,3 +8,5 @@ Nickname = ""                                           # The username of your b
 Token = ""                                              # Your Twitch subscriber token (needs to have the editor scope)
 Channel = "#"                                           # The channel you want to join
 ClientID = ""                                           # The client ID of your bot
+StreamLinkLocation = "C:\Program/Files\Streamlink\\bin\streamlink.exe"
+VLCLocation = "C:\Program/Files\VLC\\vlc.exe"
