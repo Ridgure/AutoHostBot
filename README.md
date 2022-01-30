@@ -25,7 +25,7 @@
 
 | General:      | 
 | ------------- |
-| Host function that will host the the person on top of your host list    |
+| Host function that will host the the person on top of your host list|
 
 **Automated functions:**
 
@@ -35,6 +35,7 @@
 |Filter games so only games that you like are hosted|
 |Opens stream in [Livestreamer](https://docs.livestreamer.io/) if you install it|
 |Hosts a new stream as soon as the current stream switches to a game you don't like|
+|Sends a webhook with the channel that is being hosted|
 
 | Socials:      |Links to socials:|                  
 | ------------- |:-------------:|
@@ -51,20 +52,23 @@
 **Clone**
 
 Clone this repository to your local machine using 
-```git clone https://github.com/Ridgure/TwitchBot.git```
+```git clone https://github.com/Ridgure/AutoHostBot.git```
 
 **Setup**
 
-In order to be able to run the bot add a file `config.py` in the same folder as the bot and go through the steps below:
-`config.py` should look something like this:
+In order to be able to run the bot add a file `AutoHostConfig.py` in the same folder as the bot and go through the steps below:
+`AutoHostConfig.py` should look something like this:
 
 ```python
-Host = "irc.twitch.tv"         # The Twitch IRC server
-Port = 6667                    # Always use port 6667!
-Nickname = "<Name>"            # Your Twitch username, lowercase
-Token = "<Token>"    # Self generated token that has to have the editor scope
-Channel = "#<Channel>"         # The channel you want to join
-ClientID = "<ClientID>"        # Your client ID
+Host = "irc.twitch.tv"                                                 # The Twitch IRC server
+Port = 6667                                                            # Always use port 6667!
+Nickname = "<Nickname>"                                                # The username of your bot
+Token = "<Token>"                                                      # Your Twitch subscriber token (needs to have the editor scope)
+Channel = "#<Channel>"                                                 # The channel you want to join
+ClientID = "<Client ID>"                                               # The client ID of your bot
+StreamLinkLocation = "C:\Program/Files\Streamlink\\bin\streamlink.exe" # The location of your streamlink install
+VLCLocation = "C:\Program/Files\VLC\\vlc.exe"                          # The location of your VLC install
+webhook_url = "https://discord.com/api/webhooks/123456"                # The url too your discord webhook
 ```
 
 - Create a Twitch account with the name of your bot
@@ -101,10 +105,10 @@ You will need to install these things to run the bot
   
 **Running the bot**
 
-Run [bot.py](docs/bot.py) by going to its location and running this command:
+Run [bot.py](docs/AutoHostBot.py) by going to its location and running this command:
 
 ```python
-python bot.py
+python AutoHostBot.py
 ```
 
 ## Acknowledgements:

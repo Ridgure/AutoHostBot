@@ -5,8 +5,8 @@
 import os
 import re
 import socket
+import json
 from threading import Thread
-
 import AutoHostList
 import requests
 from AutoHostConfig import *
@@ -22,10 +22,16 @@ def message(msg):
         pass
 
 
-def host_channel(channel):
-    #comment this out if you want to disable hosts for testing
-    # print "testhost " + channel
+def host_channel(channel, title, game):
+    # comment this out if you want to disable hosts for testing
+    # print "test host " + channel
     message("/host " + channel)
+    content = "Now hosting the channel " + channel + " who is playing " + game + " with the title " + title + ". Go check them out over at: https://twitch.tv/" + channel
+    data = {
+        'content': content,
+        'username': "Riboture"
+            }
+    r = requests.post(Webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
 
 
 def streamLink():
@@ -48,8 +54,10 @@ def host():
             elif not streamData['data']:
                 pass
             elif streamData['data'][0]['game_name'] == 'Minecraft':
-                c = 0
+                game = streamData['data'][0]['game_name']
+                channel = AutoHostList.hostList[i1]
                 title = streamData['data'][0]['title'].encode('utf', 'ignore')
+                c = 0
                 for i5 in AutoHostList.blackListTitle:
                     if re.search(r"" + i5.lower(), title.lower()):
                         c = 1
@@ -57,11 +65,12 @@ def host():
                 if c == 1:
                     pass
                 else:
-                    host_channel(AutoHostList.hostList[i1])
-                    print ("Tried to host the Minecraft stream: " + AutoHostList.hostList[i1])
-                    print ("The title of the stream is: " + streamData['data'][0]['title'].encode('utf', 'ignore'))
+                    host_channel(channel, title, game)
+                    print ("Tried to host the Minecraft stream: " + channel)
+                    print ("They are playing: " + game)
+                    print ("The title of the stream is: " + title)
                     minecraftStream = True
-                    currentHost = AutoHostList.hostList[i1]
+                    currentHost = channel
                     Thread(target=streamLink).start()
                     break
             else:
@@ -85,20 +94,24 @@ def host():
                     elif not streamData['data']:
                         pass
                     elif streamData['data'][0]['game_name'] == AutoHostList.hostGames[i3]:
+                        game = streamData['data'][0]['game_name']
+                        channel = AutoHostList.hostList[i2]
+                        title = streamData['data'][0]['title'].encode('utf', 'ignore')
                         c = 0
-                        title = streamData['data'][0]['title'].encode('utf', 'ignore').lower()
+                        titleLowercase = title.lower()
                         for i5 in AutoHostList.blackListTitle:
-                            if re.search(r"" + i5.lower(), title):
+                            if re.search(r"" + i5.lower(), titleLowercase):
                                 c = 1
                                 break
                         if c == 1:
                             pass
                         else:
-                            host_channel(AutoHostList.hostList[i2])
-                            print ("Tried to host the non Minecraft stream: " + AutoHostList.hostList[i2])
-                            print ("The title of the stream is: " + streamData['data'][0]['title'])
+                            host_channel(channel, title, game)
+                            print ("Tried to host the non Minecraft stream: " + channel)
+                            print ("They are playing: " + game)
+                            print ("The title of the stream is: " + title)
                             hostGame = True
-                            currentHost = AutoHostList.hostList[i2]
+                            currentHost = channel
                             Thread(target=streamLink).start()
                             break
                     else:
@@ -121,19 +134,23 @@ def host():
                 if not streamData['data']:
                     pass
                 else:
+                    game = streamData['data'][0]['game_name']
+                    channel = AutoHostList.hostList[i4]
+                    title = streamData['data'][0]['title'].encode('utf', 'ignore')
                     c = 0
-                    title = streamData['data'][0]['title'].encode('utf', 'ignore').lower()
+                    titleLowercase = title.lower()
                     for i5 in AutoHostList.blackListTitle:
-                        if re.search(r"" + i5.lower(), title):
+                        if re.search(r"" + i5.lower(), titleLowercase):
                             c = 1
                             break
                     if c == 1:
                         pass
                     else:
-                        host_channel(AutoHostList.hostList[i4])
-                        print ("Tried to host the other game stream: " + AutoHostList.hostList[i4])
-                        print ("The title of the stream is: " + streamData['data'][0]['title'])
-                        currentHost = AutoHostList.hostList[i4]
+                        host_channel(channel, title, game)
+                        print ("Tried to host the other game stream: " + channel)
+                        print ("They are playing: " + game)
+                        print ("The title of the stream is: " + title)
+                        currentHost = channel
                         Thread(target=streamLink).start()
                         break
             except Exception as e:
