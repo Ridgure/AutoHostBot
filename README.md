@@ -35,7 +35,8 @@
 |Filter games so only games that you like are hosted|
 |Opens stream in [Livestreamer](https://docs.livestreamer.io/) if you install it|
 |Hosts a new stream as soon as the current stream switches to a game you don't like|
-|Sends a webhook with the channel that is being hosted|
+|Hosts a new stream as soon as the current title switches to a title you don't like|
+|Sends a message to a discord channnel if a new channel is hosted|
 
 | Socials:      |Links to socials:|                  
 | ------------- |:-------------:|

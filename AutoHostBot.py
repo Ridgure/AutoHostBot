@@ -26,7 +26,7 @@ def host_channel(channel, title, game):
     # comment this out if you want to disable hosts for testing
     # print "test host " + channel
     message("/host " + channel)
-    content = "Now hosting the channel " + channel + " who is playing " + game + " with the title " + title + ". Go check them out over at: https://twitch.tv/" + channel
+    content = "Now hosting the channel " + channel + " who is playing " + game + " with the title: " + title + ". Go check them out over at: https://twitch.tv/" + channel
     data = {
         'content': content,
         'username': "Riboture"
@@ -42,12 +42,17 @@ def host():
     global minecraftStream
     global hostGame
     global currentHost
+    global currentTitle
+    global currentGame
     for i1 in range(len(AutoHostList.hostList)):
         try:
             url = "https://api.twitch.tv/helix/streams?user_login=" + AutoHostList.hostList[i1]
             params = {"Client-ID": "" + ClientID + "", "Authorization": "Bearer " + FollowerToken}
             response = requests.get(url, headers=params)
             streamData = response.json()
+            if response.status_code == 400:
+                print ("Bad request")
+                break
             if response.status_code == 429:
                 print ("Too many user requests")
                 break
@@ -71,6 +76,8 @@ def host():
                     print ("The title of the stream is: " + title)
                     minecraftStream = True
                     currentHost = channel
+                    currentTitle = title
+                    currentGame = game
                     Thread(target=streamLink).start()
                     break
             else:
@@ -88,6 +95,9 @@ def host():
                     params = {"Client-ID": "" + ClientID + "", "Authorization": "Bearer " + FollowerToken}
                     response = requests.get(url, headers=params)
                     streamData = response.json()
+                    if response.status_code == 400:
+                        print ("Bad request")
+                        break
                     if response.status_code == 429:
                         print ("Too many user requests")
                         break
@@ -171,6 +181,8 @@ s.send("CAP REQ :twitch.tv/tags\r\n")
 minecraftStream = False
 hostGame = False
 currentHost = ""
+currentTitle = ""
+currentGame = ""
 
 # Host a stream when the bot starts
 host()
@@ -190,27 +202,47 @@ while True:
                 params = {"Client-ID": "" + ClientID + "", "Authorization": "Bearer " + FollowerToken}
                 response = requests.get(url, headers=params)
                 streamData = response.json()
+                if response.status_code == 400:
+                    print ("Bad request")
+                    break
                 if response.status_code == 429:
                     print ("Too many user requests")
                     break
                 if not streamData['data']:
                     print "Currently hosted stream is no longer live. New stream will be hosted"
                     host()
-                currentGame = streamData['data'][0]['game_name']
-                currentTitle = streamData['data'][0]['title']
-                if currentGame == 'Minecraft':
-                    minecraftStream = True
+                if currentGame == streamData['data'][0]['game_name']:
+                    pass
                 else:
+                    print "Game changed to: " + streamData['data'][0]['game_name']
+                    currentGame = streamData['data'][0]['game_name']
+                    if currentGame == 'Minecraft':
+                        minecraftStream = True
+                    else:
+                        c = 0
+                        for i in AutoHostList.hostGames:
+                            print i
+                            if i == currentGame:
+                                c = 1
+                                break
+                        if c == 1:
+                            pass
+                        else:
+                            print "Current stream is no longer streaming a good game. New stream will be hosted"
+                            host()
+                if currentTitle == streamData['data'][0]['title'].encode('utf', 'ignore'):
+                    pass
+                else:
+                    print "Title changed to: " + streamData['data'][0]['game_name']
+                    currentTitle = streamData['data'][0]['title'].encode('utf', 'ignore')
                     c = 0
-                    for i in AutoHostList.hostGames:
-                        print i
-                        if i == currentGame:
+                    currentTitleLowercase = currentTitle.lower()
+                    for i5 in AutoHostList.blackListTitle:
+                        if re.search(r"" + i5.lower(), currentTitleLowercase):
                             c = 1
                             break
                     if c == 1:
-                        pass
-                    else:
-                        print "Current stream is no longer streaming a good game. New stream will be hosted"
+                        print "This title is no longer good and a new stream will be hosted"
                         host()
             except Exception as e:
                 print "Error in getting non good game streams"
