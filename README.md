@@ -29,14 +29,15 @@
 
 **Automated functions:**
 
-| Done by the bot automatically:| 
-| ------------- |
-|Filter stream titles with regular expressions|
-|Filter games so only games that you like are hosted|
-|Opens stream in [Livestreamer](https://docs.livestreamer.io/) if you install it|
-|Hosts a new stream as soon as the current stream switches to a game you don't like|
-|Hosts a new stream as soon as the current title switches to a title you don't like|
-|Sends a message to a discord channnel if a new channel is hosted|
+| Done by the bot automatically:                                                     | 
+|------------------------------------------------------------------------------------|
+| Filter stream titles with regular expressions                                      |
+| Filter games so only games that you like are hosted                                |
+| Opens stream in [Streamlink](https://streamlink.github.io/) if you install it      |
+| Hosts a new stream as soon as the current stream switches to a game you don't like |
+| Hosts a new stream as soon as the current stream has gone offline                  |
+| Hosts a new stream as soon as the current title switches to a title you don't like |
+| Sends a message to a discord channel if a new channel is hosted                    |
 
 | Socials:      |Links to socials:|                  
 | ------------- |:-------------:|
@@ -72,6 +73,7 @@ VLCLocation = "C:\Program/Files\VLC\\vlc.exe"                          # The loc
 webhook_url = "https://discord.com/api/webhooks/123456"                # The url too your discord webhook
 ```
 
+- Install python 2.7
 - Create a Twitch account with the name of your bot
 - Register your application on the [Twitch developer site](https://glass.twitch.tv/login)
   - Set the Name to the name of the account you just created
@@ -89,9 +91,10 @@ webhook_url = "https://discord.com/api/webhooks/123456"                # The url
   - Click Authenticate
   - It will look like you got a blank page but your url should look like the second url
   - Your access token is the gibberish where it says Token in the url 
+- If you want to post to a Discord channel open its settings in Discord and enable webhooks
 
 ```
-https://id.twitch.tv/oauth2/authorize?client_id=<clientID>&redirect_uri=http://localhost&response_type=token&scope=channel_subscriptions+user_read+channel_check_subscription+chat_login
+https://id.twitch.tv/oauth2/authorize?client_id=<clientID>&redirect_uri=http://localhost&response_type=token&scope=channel_subscriptions+user_read+channel_check_subscription+chat_login+user:read:subscriptions
 http://localhost/#access_token=<Token>&scope=channel_subscriptions+user_read+channel_check_subscription+chat_login&token_type=bearer
 ```
 
@@ -128,7 +131,7 @@ Ponderier by DillonEA on Twitch as [DillonEA](https//:twitch.tv/DillonEA)
 
 **Twitch**
 
-See the bot in action when I am live on [Twitch](https://twitch.tv/ridgure) over at [Twitch.tv/Ridgure](https://twitch.tv/ridgure)
+See the bot in action when I am not live on [Twitch](https://twitch.tv/ridgure) over at [Twitch.tv/Ridgure](https://twitch.tv/ridgure)
 
 **Social media**
 
